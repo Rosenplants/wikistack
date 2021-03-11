@@ -22,8 +22,8 @@ db.authenticate().then(() => {
 });
 
 const init = async () => {
-  // await db.sync({ force: true });
-  await db.sync();
+  await db.sync({ force: true });
+  // await db.sync();
 
   app.listen(port, () => {
     console.log(`Server is listening on port ${port}!`);
