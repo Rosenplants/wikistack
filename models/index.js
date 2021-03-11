@@ -1,4 +1,6 @@
 const Sequelize = require("sequelize");
+const slugGen = require("../hooks/beforeValidate");
+
 const db = new Sequelize("postgres://localhost:5432/wikistack", {
   logging: false,
 });
@@ -35,6 +37,13 @@ const User = db.define("user", {
     unique: true,
   },
 });
+
+Page.beforeValidate((pageInstance) => {
+  pageInstance.slug = slugGen(pageInstance.slug);
+  console.log(pageInstance.slug);
+});
+
+Page.belongsTo(User, { as: "author" });
 
 module.exports = {
   db,
